@@ -186,6 +186,7 @@ footer{padding:56px 40px;border-top:1px solid rgba(201,168,76,.08);text-align:ce
 footer p{color:rgba(255,255,255,.18);font-size:13px;letter-spacing:2px;}
 footer span{color:var(--gold);}
 
+/* ===== RESPONSIVE: TABLET ===== */
 @media(max-width:900px){
   .era{grid-template-columns:1fr;padding:0 20px;}
   .era-node{display:none;}
@@ -196,6 +197,117 @@ footer span{color:var(--gold);}
   .quiz-box{padding:28px 18px;}
   .comp-arena{grid-template-columns:1fr;}
   .comp-divider{flex-direction:row;padding:20px 0;}
+}
+
+/* ===== RESPONSIVE: MÓVIL ===== */
+@media(max-width:600px){
+  /* Cursor personalizado: ocultar en táctil */
+  .cursor,.cursor-ring{display:none;}
+  body{cursor:auto;}
+
+  /* Author bar */
+  #author-bar span{font-size:8px;letter-spacing:2px;}
+
+  /* Nav */
+  nav{padding:10px 16px;top:28px;}
+  .nav-logo{font-size:11px;letter-spacing:2px;}
+  .nav-links{display:none;}
+
+  /* Progress bar */
+  #progress-bar{top:28px;}
+
+  /* Hero */
+  #hero{height:100svh;padding:0 16px;}
+  .hero-bg-text{font-size:clamp(60px,22vw,120px);}
+  h1{font-size:clamp(30px,10vw,52px);letter-spacing:-.02em;}
+  .hero-badge{font-size:9px;letter-spacing:3px;margin-bottom:14px;}
+  .hero-sub{font-size:12px;letter-spacing:2px;margin-top:10px;}
+  .scroll-hint{bottom:24px;}
+
+  /* Timeline section */
+  #timeline{padding:70px 0 40px;}
+  .section-intro{padding:0 16px 50px;}
+  .section-intro p{font-size:14px;}
+
+  /* ERA cards — stack vertical */
+  .era{
+    grid-template-columns:1fr;
+    padding:0 16px;
+    margin:0 auto 60px;
+  }
+  .era-node{display:none;}
+  .era:nth-child(even) .era-content,
+  .era:nth-child(even) .era-visual{order:unset;}
+  .era-content{padding:22px 18px;}
+  .era-tag{font-size:9px;letter-spacing:2px;}
+  .era-content h3{font-size:16px;}
+  .era-content p{font-size:13px;line-height:1.6;}
+  .era-model{font-size:12px;flex-wrap:wrap;gap:6px;}
+
+  /* Car SVG visual */
+  .era-visual{padding:8px 0;}
+  .car-svg-wrap{max-width:100%;}
+
+  /* Specs grid — 1 columna en móvil */
+  .specs-grid{grid-template-columns:1fr 1fr;}
+  .spec-value{font-size:11px;}
+  .spec-label{font-size:9px;}
+
+  /* Stats */
+  #stats{padding:60px 16px;}
+  .stats-grid{grid-template-columns:1fr 1fr;gap:1px;}
+  .stat-box{padding:24px 12px;}
+
+  /* Comparador */
+  #comparador{padding:60px 16px;}
+  #comparador h2{font-size:clamp(20px,6vw,32px);}
+  .comp-subtitle{font-size:12px;letter-spacing:1px;margin-bottom:28px;}
+  .comp-selectors{gap:8px;margin-bottom:28px;}
+  .comp-sel{padding:8px 12px;font-size:11px;letter-spacing:1px;}
+  .comp-arena{grid-template-columns:1fr;gap:0;}
+  .comp-divider{
+    flex-direction:row;
+    justify-content:center;
+    padding:16px 0;
+    gap:12px;
+    overflow-x:auto;
+  }
+  .comp-metric-center{display:none;}
+  .vs-circle{width:40px;height:40px;font-size:11px;flex-shrink:0;}
+  .comp-card{padding:20px 16px;}
+  .comp-card h4{font-size:12px;}
+  .comp-metric-val{font-size:15px;}
+  .comp-metric-label{font-size:9px;}
+
+  /* Future */
+  #future{padding:60px 16px;}
+  #future h2{font-size:clamp(22px,7vw,38px);}
+  #future .fut-sub{font-size:14px;margin-bottom:36px;}
+  .future-grid{grid-template-columns:1fr;gap:1px;}
+  .future-card{padding:26px 20px;}
+  .future-card p{font-size:13px;}
+
+  /* Quiz */
+  #quiz{padding:60px 16px;}
+  #quiz h2{font-size:clamp(18px,6vw,32px);}
+  #quiz .sub{font-size:11px;letter-spacing:2px;margin-bottom:32px;}
+  .quiz-box{padding:22px 16px;}
+  .quiz-question{font-size:14px;min-height:auto;}
+  .quiz-option{padding:12px 16px;font-size:14px;}
+  .quiz-feedback{font-size:13px;}
+  .quiz-next{font-size:10px;padding:11px 22px;}
+
+  /* Footer */
+  footer{padding:36px 16px;}
+  footer p{font-size:11px;letter-spacing:1px;}
+
+  /* Nav hamburger hint (menú oculto, mostrar ícono) */
+  nav::after{
+    content:'☰';
+    font-size:18px;
+    color:rgba(201,168,76,.6);
+    cursor:pointer;
+  }
 }
 </style>
 </head>
@@ -1064,12 +1176,17 @@ footer span{color:var(--gold);}
 <footer><p>INGENIERIA MULTIMEDIA &nbsp;·&nbsp; <span>EVOLUCIÓN DEL AUTO</span> &nbsp;·&nbsp; 2026</p></footer>
 
 <script>
-// CURSOR
+// CURSOR — only on non-touch devices
 const cursor=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
-document.addEventListener('mousemove',e=>{
-  cursor.style.left=e.clientX+'px';cursor.style.top=e.clientY+'px';
-  setTimeout(()=>{ring.style.left=e.clientX+'px';ring.style.top=e.clientY+'px';},85);
-});
+const isTouch=('ontouchstart' in window)||navigator.maxTouchPoints>0;
+if(isTouch){
+  cursor.style.display='none';ring.style.display='none';document.body.style.cursor='auto';
+}else{
+  document.addEventListener('mousemove',e=>{
+    cursor.style.left=e.clientX+'px';cursor.style.top=e.clientY+'px';
+    setTimeout(()=>{ring.style.left=e.clientX+'px';ring.style.top=e.clientY+'px';},85);
+  });
+}
 
 // PROGRESS BAR
 window.addEventListener('scroll',()=>{
